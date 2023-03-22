@@ -2,7 +2,6 @@ import { Flex, IconButton } from "@chakra-ui/react";
 import { RiCloseFill } from 'react-icons/ri';
 import { FaStop } from 'react-icons/fa';
 import { useControl } from "@/hooks/useControl";
-import { useState } from "react";
 
 export function Control() {
   const { typeSelected, onSetTypeSelected } = useControl()

@@ -1,8 +1,8 @@
-import { Level, LevelProps, level as Nivel } from "@/components/Screen/levels";
+import { type PuzzleProps, type Puzzle } from "@/components/Screen/puzzle";
 
 interface MergeBlockProps {
-  array: LevelProps;
-  keys: Array<keyof LevelProps>;
+  array: PuzzleProps;
+  keys: Array<keyof PuzzleProps>;
 }
 
 function concatArrays(arrays: number[][][]) {
@@ -12,14 +12,18 @@ function concatArrays(arrays: number[][][]) {
 }
 
 function mergeBlock({ array, keys }: MergeBlockProps) {
-  let result: Level[] = [];
+  let result: Puzzle[] = [];
   keys.forEach((key) => {
     result = result.concat(array[key]);
   });
   return result;
 }
 
-function getNumberOfFilled(array: Level[]) {
+export function getRowNumber(cellIndex: number, elementsPerRow: number): number {
+  return Math.ceil(cellIndex / elementsPerRow);
+}
+
+function getNumberOfFilled(array: Puzzle[]) {
   let number: number = 0;
 
   return array.reduce((acc, value, index, array) => {
@@ -41,7 +45,7 @@ function getNumberOfFilled(array: Level[]) {
 }
 
 interface GetTipByBlockProps {
-  array: LevelProps
+  array: PuzzleProps
 }
 
 function getTipByBlock(props: GetTipByBlockProps) {
@@ -113,7 +117,7 @@ function getTipByBlockLine(props: GetTipByBlockProps) {
   return concatArrays(resultAllBlock)
 }
 
-export function getTipByColumn(level: LevelProps) {
+export function getTipByColumn(level: PuzzleProps) {
   const columnTips = getTipByBlock({
     array: level,
   });
@@ -121,7 +125,7 @@ export function getTipByColumn(level: LevelProps) {
   return columnTips;
 }
 
-export function getTipByLine(level: LevelProps) {
+export function getTipByLine(level: PuzzleProps) {
   const lineTips = getTipByBlockLine({
     array: level,
   });
@@ -130,7 +134,7 @@ export function getTipByLine(level: LevelProps) {
 }
 
 
-export function getFilledByColumn(level: Level[], filterIds: number[]) {
+export function getFilledByColumn(level: Puzzle[], filterIds: number[]) {
   const array = level.filter(item => filterIds.includes(item.id))
   let number: number = 0
 
