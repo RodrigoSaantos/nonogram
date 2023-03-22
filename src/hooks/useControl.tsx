@@ -108,7 +108,7 @@ export function ControlProvider({ children }: ControlProviderProps) {
   useEffect(() => {
     if (cellSelected) {
       const cellSelectedIndex = cellSelected.id - 1
-      const lineIndex = getRowNumber(cellSelectedIndex, size) - 1
+      const lineIndex = getRowNumber(cellSelected.id, size) - 1
       const tipsByLine = rowHint[lineIndex]
       const sumTipsByLine = tipsByLine.reduce((total, number) => total + number)
       const cellSelectedByLine = getTheNumberOfFilledLines(cellSelectedIndex)
