@@ -1,3 +1,4 @@
+import { useControl } from "@/hooks/useControl";
 import { getFilledByColumn } from "@/utils/getFilledByColumn";
 import { Flex } from "@chakra-ui/react";
 import { Box } from "../Box";
@@ -6,32 +7,19 @@ import { TipLeft } from "../TipLeft";
 import { TipTop } from "../TipTop";
 
 export function Canva() {
+  const { columnTip, lineTip } = useControl()
   return (
     <Flex align={'flex-end'}>
         <Flex gap={'4px'} justifyContent='center' marginBlockEnd={1} h='480px' flexDir={'column'} marginInlineEnd='4px'>
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
-          <TipLeft />
+          {lineTip.map((tip, index) => (
+            <TipLeft key={`${tip[0]}-${index}`} tips={tip} />
+          ))}
         </Flex>
       <Flex flexDirection={'column'}>
         <Flex gap={'4px'} justifyContent='center' marginBlockEnd={1}>
-          <TipTop tips={getFilledByColumn(level.a.concat(level.c), [1,6,11, 16, 21])} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
-          <TipTop tips={[]} />
+          {columnTip.map((tip, index) => (
+            <TipTop key={`${tip[0]}-${index}`} tips={tip} />
+          ))}
         </Flex>
         <Flex display={'grid'} gridTemplateColumns="repeat(2, 1fr)" border='2px solid'>
           <Flex border="2px solid" display={'grid'} gridTemplateColumns="repeat(5, 1fr)">

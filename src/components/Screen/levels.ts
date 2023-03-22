@@ -2,9 +2,10 @@ export interface Level {
   id: number;
   block: 'a' | 'b' | 'c' | 'd';
   type: 'filled' | 'unfilled'
+  column: "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
 }
 
-interface LevelProps {
+export interface LevelProps {
   a: Level[];
   b: Level[];
   c: Level[];
@@ -15,508 +16,608 @@ export const level: LevelProps = {
     {
       id: 1,
       block: 'a',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
       id: 2,
       block: 'a',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'b',
     },
     {
       id: 3,
       block: 'a',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'c',
     },
     {
       id: 4,
       block: 'a',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'd',
     },
     {
       id: 5,
       block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 6,
-      block: 'a',
-      type: 'unfilled'
-    },
-    {
-      id: 7,
-      block: 'a',
-      type: 'unfilled'
-    },
-    {
-      id: 8,
-      block: 'a',
-      type: 'unfilled'
-    },
-    {
-      id: 9,
-      block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 10,
-      block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
     {
       id: 11,
       block: 'a',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
       id: 12,
       block: 'a',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'b',
     },
     {
       id: 13,
       block: 'a',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'c',
     },
     {
       id: 14,
       block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'd',
     },
     {
       id: 15,
       block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 16,
-      block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 17,
-      block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 18,
-      block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 19,
-      block: 'a',
-      type: 'filled'
-    },
-    {
-      id: 20,
-      block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
     {
       id: 21,
       block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'a',
     },
     {
       id: 22,
       block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'b',
     },
     {
       id: 23,
       block: 'a',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'c',
     },
     {
       id: 24,
       block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'd',
     },
     {
       id: 25,
       block: 'a',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
+    },
+    {
+      id: 31,
+      block: 'a',
+      type: 'filled',
+      column: 'a',
+    },
+    {
+      id: 32,
+      block: 'a',
+      type: 'filled',
+      column: 'b',
+    },
+    {
+      id: 33,
+      block: 'a',
+      type: 'filled',
+      column: 'c',
+    },
+    {
+      id: 34,
+      block: 'a',
+      type: 'filled',
+      column: 'd',
+    },
+    {
+      id: 35,
+      block: 'a',
+      type: 'filled',
+      column: 'e',
+    },
+    {
+      id: 41,
+      block: 'a',
+      type: 'filled',
+      column: 'a',
+    },
+    {
+      id: 42,
+      block: 'a',
+      type: 'filled',
+      column: 'b',
+    },
+    {
+      id: 43,
+      block: 'a',
+      type: 'filled',
+      column: 'c',
+    },
+    {
+      id: 44,
+      block: 'a',
+      type: 'filled',
+      column: 'd',
+    },
+    {
+      id: 45,
+      block: 'a',
+      type: 'filled',
+      column: 'e',
     },
   ],
   b: [
     {
-      id: 1,
-      block: 'b',
-      type: 'filled'
-    },
-    {
-      id: 2,
-      block: 'b',
-      type: 'unfilled'
-    },
-    {
-      id: 3,
-      block: 'b',
-      type: 'unfilled'
-    },
-    {
-      id: 4,
-      block: 'b',
-      type: 'unfilled'
-    },
-    {
-      id: 5,
-      block: 'b',
-      type: 'unfilled'
-    },
-    {
       id: 6,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
       id: 7,
       block: 'b',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'g',
     },
     {
       id: 8,
       block: 'b',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'h',
     },
     {
       id: 9,
       block: 'b',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'i',
     },
     {
       id: 10,
       block: 'b',
-      type: 'unfilled'
-    },
-    {
-      id: 11,
-      block: 'b',
-      type: 'filled'
-    },
-    {
-      id: 12,
-      block: 'b',
-      type: 'filled'
-    },
-    {
-      id: 13,
-      block: 'b',
-      type: 'unfilled'
-    },
-    {
-      id: 14,
-      block: 'b',
-      type: 'filled'
-    },
-    {
-      id: 15,
-      block: 'b',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'j',
     },
     {
       id: 16,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
       id: 17,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'g',
     },
     {
       id: 18,
       block: 'b',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'h',
     },
     {
       id: 19,
       block: 'b',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'i',
     },
     {
       id: 20,
       block: 'b',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'j',
     },
     {
-      id: 21,
+      id: 26,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
-      id: 22,
+      id: 27,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'g',
     },
     {
-      id: 23,
+      id: 28,
       block: 'b',
-      type: 'filled'
+      type: 'unfilled',
+      column: 'h',
     },
     {
-      id: 24,
+      id: 29,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'i',
     },
     {
-      id: 25,
+      id: 30,
       block: 'b',
-      type: 'filled'
+      type: 'filled',
+      column: 'j',
+    },
+    {
+      id: 36,
+      block: 'b',
+      type: 'filled',
+      column: 'f',
+    },
+    {
+      id: 37,
+      block: 'b',
+      type: 'filled',
+      column: 'g',
+    },
+    {
+      id: 38,
+      block: 'b',
+      type: 'filled',
+      column: 'h',
+    },
+    {
+      id: 39,
+      block: 'b',
+      type: 'filled',
+      column: 'i',
+    },
+    {
+      id: 40,
+      block: 'b',
+      type: 'filled',
+      column: 'j',
+    },
+    {
+      id: 46,
+      block: 'b',
+      type: 'filled',
+      column: 'f',
+    },
+    {
+      id: 47,
+      block: 'b',
+      type: 'filled',
+      column: 'g',
+    },
+    {
+      id: 48,
+      block: 'b',
+      type: 'filled',
+      column: 'h',
+    },
+    {
+      id: 49,
+      block: 'b',
+      type: 'filled',
+      column: 'i',
+    },
+    {
+      id: 50,
+      block: 'b',
+      type: 'filled',
+      column: 'j',
     },
   ],
   c: [
     {
-      id: 1,
+      id: 51,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
-      id: 2,
+      id: 52,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'b',
     },
     {
-      id: 3,
+      id: 53,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'c',
     },
     {
-      id: 4,
+      id: 54,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'd',
     },
     {
-      id: 5,
+      id: 55,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
     {
-      id: 6,
+      id: 61,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
-      id: 7,
+      id: 62,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'b',
     },
     {
-      id: 8,
+      id: 63,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'c',
     },
     {
-      id: 9,
+      id: 64,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'd',
     },
     {
-      id: 10,
+      id: 65,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
     {
-      id: 11,
+      id: 71,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
-      id: 12,
+      id: 72,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'b',
     },
     {
-      id: 13,
+      id: 73,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'c',
     },
     {
-      id: 14,
+      id: 74,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'd',
     },
     {
-      id: 15,
+      id: 75,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
     {
-      id: 16,
+      id: 81,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
-      id: 17,
+      id: 82,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'b',
     },
     {
-      id: 18,
+      id: 83,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'c',
     },
     {
-      id: 19,
+      id: 84,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'd',
     },
     {
-      id: 20,
+      id: 85,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
     {
-      id: 21,
+      id: 91,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'a',
     },
     {
-      id: 22,
+      id: 92,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'b',
     },
     {
-      id: 23,
+      id: 93,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'c',
     },
     {
-      id: 24,
+      id: 94,
       block: 'c',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'd',
     },
     {
-      id: 25,
+      id: 95,
       block: 'c',
-      type: 'filled'
+      type: 'filled',
+      column: 'e',
     },
   ],
   d: [
     {
-      id: 1,
+      id: 56,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
-      id: 2,
+      id: 57,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'g',
     },
     {
-      id: 3,
+      id: 58,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'h',
     },
     {
-      id: 4,
+      id: 59,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'i',
     },
     {
-      id: 5,
+      id: 60,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'j',
     },
     {
-      id: 6,
+      id: 66,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
-      id: 7,
+      id: 67,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'g',
     },
     {
-      id: 8,
+      id: 68,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'h',
     },
     {
-      id: 9,
+      id: 69,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'i',
     },
     {
-      id: 10,
+      id: 70,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'j',
     },
     {
-      id: 11,
+      id: 76,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
-      id: 12,
+      id: 77,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'g',
     },
     {
-      id: 13,
+      id: 78,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'h',
     },
     {
-      id: 14,
+      id: 79,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'i',
     },
     {
-      id: 15,
+      id: 80,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'j',
     },
     {
-      id: 16,
+      id: 86,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
-      id: 17,
+      id: 87,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'g',
     },
     {
-      id: 18,
+      id: 88,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'h',
     },
     {
-      id: 19,
+      id: 89,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'i',
     },
     {
-      id: 20,
+      id: 90,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'j',
     },
     {
-      id: 21,
+      id: 96,
       block: 'd',
-      type: 'filled'
+      type: 'filled',
+      column: 'f',
     },
     {
-      id: 22,
+      id: 97,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'g',
     },
     {
-      id: 23,
+      id: 98,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'h',
     },
     {
-      id: 24,
+      id: 99,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'i',
     },
     {
-      id: 25,
+      id: 100,
       block: 'd',
-      type: 'unfilled'
+      type: 'unfilled',
+      column: 'j',
     },
   ],
 }
