@@ -105,16 +105,16 @@ export function ControlProvider({ children }: ControlProviderProps) {
     return row.reduce((acc, val) => acc + (val ? 1 : 0), 0);
   }, [board])
 
-  const checkHints = useCallback((cellSelected?: Puzzle): void  =>{
+  const checkHints = useCallback((cellSelected?: Puzzle): void => {
 
     if (cellSelected) {
       const cellIndex = cellSelected.id - 1;
       const rowIndex = getRowNumber(cellSelected.id, size) - 1;
 
-       // Verifica a linha
-       const rowHint = getHintByRow(fase)[rowIndex];
-       const sumRowHint = rowHint.reduce((total, number) => total + number)
-       const filledCellsInRow = getTheNumberOfFilledRows(cellIndex);
+      // Verifica a linha
+      const rowHint = getHintByRow(fase)[rowIndex];
+      const sumRowHint = rowHint.reduce((total, number) => total + number)
+      const filledCellsInRow = getTheNumberOfFilledRows(cellIndex);
 
       // Verifica a coluna
       const columnIndex = COLUMN_INDEX[cellSelected.column];
@@ -138,8 +138,6 @@ export function ControlProvider({ children }: ControlProviderProps) {
   useEffect(() => {
     checkHints(cellSelected)
   }, [cellSelected, checkHints]);
-
-  
 
   return (
     <ControlContext.Provider
