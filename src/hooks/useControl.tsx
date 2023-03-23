@@ -1,8 +1,13 @@
 import { type Puzzle, type PuzzleProps, gamePuzzle } from '@/components/Screen/puzzle';
-import { getRowNumber, getTipByColumn, getTipByLine } from '@/utils/getFilledByColumn';
+import { getRowNumber, getHintByColumn, getHintByRow } from '@/utils/getFilledByColumn';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 type TypeSelect = 'filled' | 'unfilled'
+
+interface CompleteHints {
+  row: boolean[];
+  column: boolean[];
+}
 
 type ControlContextData = {
   typeSelected: TypeSelect;
@@ -10,8 +15,7 @@ type ControlContextData = {
   rowHint: number[][];
   board: boolean[]
   cellSelected?: Puzzle
-  completedCols: boolean[]
-  completedRows: boolean[]
+  completeHints: CompleteHints
   onSetTypeSelected: (type: TypeSelect) => void;
   onSetBoard: (index: number, value: boolean) => void
   onSetCellSelected: (cell: Puzzle) => void
@@ -43,15 +47,15 @@ export function ControlProvider({ children }: ControlProviderProps) {
   const [typeSelected, setTypeSelected] = useState<TypeSelect>('filled')
   const [cellSelected, setCellSelected] = useState<Puzzle | undefined>(undefined)
   const [board, setBoard] = useState(Array(size * size).fill(false));
-  const [completedCols, setCompletedCols] = useState<boolean[]>(Array(size).fill(false));
-  const [completedRows, setCompletedRows] = useState<boolean[]>(Array(size).fill(false));
-
+  const [completeHints, setCompletedHints] = useState<CompleteHints>({ row: Array(10).fill(false), column: Array(10).fill(false) });
   const [fase, setFase] = useState<PuzzleProps>(gamePuzzle);
+
   const colHint = useMemo(() => {
-    return getTipByColumn(fase)
+    return getHintByColumn(fase)
   }, [fase])
+
   const rowHint = useMemo(() => {
-    return getTipByLine(fase)
+    return getHintByRow(fase)
   }, [fase])
 
   const onSetTypeSelected = useCallback((type: TypeSelect) => {
@@ -80,50 +84,46 @@ export function ControlProvider({ children }: ControlProviderProps) {
     return columnCompleted
   }, [board])
 
-  const getTheNumberOfFilledLines = useCallback((cellIndex: number) => {
+  const getTheNumberOfFilledRows = useCallback((cellIndex: number) => {
     const start = cellIndex - (cellIndex % 10);
     const end = start + 10;
     const row = board.slice(start, end);
     return row.reduce((acc, val) => acc + (val ? 1 : 0), 0);
   }, [board])
 
-  useEffect(() => {
+  const checkHints = useCallback((cellSelected?: Puzzle): void  =>{
+
     if (cellSelected) {
-      const index = COLUMN_INDEX[cellSelected.column]
-      const tipsByColumn = colHint[index]
-      const sumTipsByColumn = tipsByColumn.reduce((total, number) => total + number)
-      const cellSelectedByColumn = getTheNumberOfFilledColumns(index)
+      const cellIndex = cellSelected.id - 1;
+      const rowIndex = getRowNumber(cellSelected.id, size) - 1;
 
-      if (sumTipsByColumn === cellSelectedByColumn) {
-        setCompletedCols(state => {
-          const draft = [...state]
-          draft[index] = true;
-          return draft;
-        })
-      }
+       // Verifica a linha
+       const rowHint = getHintByRow(fase)[rowIndex];
+       const sumRowHint = rowHint.reduce((total, number) => total + number)
+       const filledCellsInRow = getTheNumberOfFilledRows(cellIndex);
+
+      // Verifica a coluna
+      const columnIndex = COLUMN_INDEX[cellSelected.column];
+      const colHint = getHintByColumn(fase)[columnIndex];
+      const sumColHint = colHint.reduce((total, number) => total + number)
+      const filledCellsInColumn = getTheNumberOfFilledColumns(columnIndex);
+
+      setCompletedHints(state => {
+        const { column, row } = state
+        row.splice(rowIndex, 1, sumRowHint === filledCellsInRow)
+        column.splice(columnIndex, 1, sumColHint === filledCellsInColumn)
+        return {
+          ...state,
+          column,
+          row,
+        }
+      })
     }
-
-  }, [board, cellSelected, colHint, getTheNumberOfFilledColumns, getTheNumberOfFilledLines]);
+  }, [fase, getTheNumberOfFilledColumns, getTheNumberOfFilledRows])
 
   useEffect(() => {
-    if (cellSelected) {
-      const cellSelectedIndex = cellSelected.id - 1
-      const lineIndex = getRowNumber(cellSelected.id, size) - 1
-      const tipsByLine = rowHint[lineIndex]
-      const sumTipsByLine = tipsByLine.reduce((total, number) => total + number)
-      const cellSelectedByLine = getTheNumberOfFilledLines(cellSelectedIndex)
-
-      if (sumTipsByLine === cellSelectedByLine) {
-        setCompletedRows(state => {
-          const draft = [...state]
-          draft[lineIndex] = true;
-          return draft;
-        })
-      }
-    }
-
-  }, [cellSelected, getTheNumberOfFilledLines, rowHint]);
-
+    checkHints(cellSelected)
+  }, [cellSelected, checkHints]);
 
   return (
     <ControlContext.Provider
@@ -136,8 +136,7 @@ export function ControlProvider({ children }: ControlProviderProps) {
         onSetBoard,
         onSetCellSelected,
         cellSelected,
-        completedCols,
-        completedRows,
+        completeHints
       }}
     >
       {children}

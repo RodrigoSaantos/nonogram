@@ -6,7 +6,7 @@ import { RowHints } from "../RowHints";
 import { ColHints } from "../ColHints";
 
 export function Canvas() {
-  const { colHint, rowHint } = useControl()
+  const { colHint, rowHint, completeHints } = useControl()
   return (
     <Flex align={'flex-end'}>
       <Flex
@@ -17,13 +17,13 @@ export function Canvas() {
         marginInlineEnd='4px'
       >
         {rowHint.map((hint, index) => (
-          <RowHints key={`${hint[0]}-${index}`} hints={hint} />
+          <RowHints isDisabled={completeHints.row[index]} key={`${hint[0]}-${index}`} hints={hint} />
         ))}
       </Flex>
       <Flex flexDirection={'column'}>
         <Flex gap={'4px'} justifyContent='center' marginBlockEnd={1}>
           {colHint.map((hint, index) => (
-            <ColHints key={`${hint[0]}-${index}`} hints={hint} />
+            <ColHints isDisabled={completeHints.column[index]} key={`${hint[0]}-${index}`} hints={hint} />
           ))}
         </Flex>
         <Box

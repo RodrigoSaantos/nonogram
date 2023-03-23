@@ -44,11 +44,11 @@ function getNumberOfFilled(array: Puzzle[]) {
   }, [] as number[]);
 }
 
-interface GetTipByBlockProps {
+interface GetHintByBlockProps {
   array: PuzzleProps
 }
 
-function getTipByBlock(props: GetTipByBlockProps) {
+function getHintByBlock(props: GetHintByBlockProps) {
   const firstBlock = ["a", "b", "c", "d", "e"] as const;
   const secondBlock = ["f", "g", "h", "i", "j"] as const;
   const allBlock = [firstBlock, secondBlock]
@@ -83,11 +83,11 @@ function getTipByBlock(props: GetTipByBlockProps) {
   return concatArrays(resultAllBlock)
 }
 
-function getTipByBlockLine(props: GetTipByBlockProps) {
+function getHintsByRow(props: GetHintByBlockProps) {
   const firstBlock = ["1", "2", "3", "4", "5"] as const;
   const secondBlock = ["6", "7", "8", "9", "10"] as const;
   const allBlock = [firstBlock, secondBlock]
-  const lines = {
+  const rows = {
     '1': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     '2': [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
     '3': [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
@@ -101,36 +101,36 @@ function getTipByBlockLine(props: GetTipByBlockProps) {
   };
 
   const resultAllBlock = allBlock.map((block, index) => {
-    const lineResult = block.map((line) => {
+    const rowResult = block.map((row) => {
       const array = mergeBlock({
         array: props.array,
         keys: !index ? ['a', 'b'] : ['c', 'd']
-      }).filter((item) => lines[line]?.includes(item.id));
+      }).filter((item) => rows[row]?.includes(item.id));
   
       const numberOfFilled = getNumberOfFilled(array)
   
       return numberOfFilled;
     }, {});
-    return lineResult
+    return rowResult
   }, []);
 
   return concatArrays(resultAllBlock)
 }
 
-export function getTipByColumn(level: PuzzleProps) {
-  const columnTips = getTipByBlock({
+export function getHintByColumn(level: PuzzleProps) {
+  const columnHints = getHintByBlock({
     array: level,
   });
 
-  return columnTips;
+  return columnHints;
 }
 
-export function getTipByLine(level: PuzzleProps) {
-  const lineTips = getTipByBlockLine({
+export function getHintByRow(level: PuzzleProps) {
+  const rowHints = getHintsByRow({
     array: level,
   });
 
-  return lineTips;
+  return rowHints;
 }
 
 
