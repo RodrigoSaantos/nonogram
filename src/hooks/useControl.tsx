@@ -14,11 +14,14 @@ type ControlContextData = {
   colHint: number[][];
   rowHint: number[][];
   board: boolean[]
+  lives: number
   cellSelected?: Puzzle
   completeHints: CompleteHints
   onSetTypeSelected: (type: TypeSelect) => void;
   onSetBoard: (index: number, value: boolean) => void
   onSetCellSelected: (cell: Puzzle) => void
+  onMadeMistake: () => void
+  onReset: () => void
 };
 
 type ControlProviderProps = {
@@ -49,6 +52,17 @@ export function ControlProvider({ children }: ControlProviderProps) {
   const [board, setBoard] = useState(Array(size * size).fill(false));
   const [completeHints, setCompletedHints] = useState<CompleteHints>({ row: Array(10).fill(false), column: Array(10).fill(false) });
   const [fase, setFase] = useState<PuzzleProps>(gamePuzzle);
+  const [lives, setLives] = useState(3)
+
+  const onReset = useCallback(() => {
+    setCompletedHints({ row: Array(10).fill(false), column: Array(10).fill(false) })
+    setBoard(Array(size * size).fill(false))
+    setLives(3)
+  }, [])
+
+  const onMadeMistake = useCallback(() => {
+    setLives(state => state - 1)
+  }, [])
 
   const colHint = useMemo(() => {
     return getHintByColumn(fase)
@@ -125,6 +139,8 @@ export function ControlProvider({ children }: ControlProviderProps) {
     checkHints(cellSelected)
   }, [cellSelected, checkHints]);
 
+  
+
   return (
     <ControlContext.Provider
       value={{
@@ -136,7 +152,10 @@ export function ControlProvider({ children }: ControlProviderProps) {
         onSetBoard,
         onSetCellSelected,
         cellSelected,
-        completeHints
+        completeHints,
+        lives,
+        onMadeMistake,
+        onReset,
       }}
     >
       {children}
