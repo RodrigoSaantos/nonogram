@@ -23,7 +23,7 @@ const COLUMN_INDEX = {
 };
 
 export function Cell({ data }: CellProps) {
-  const { typeSelected, onSetBoard, onSetCellSelected, completeHints, onMadeMistake, lives, onReset } = useControl()
+  const { typeSelected, onSetBoard, onSetCellSelected, completeHints, onMadeMistake, lives, onReset, isReset } = useControl()
   const [isCorrect, setIsCorrect] = useState(false);
 
   const handleClick = () => {
@@ -49,11 +49,11 @@ export function Cell({ data }: CellProps) {
   }, [completeHints, data.column, data.id])
 
   useEffect(() => {
-    if (!lives) {
+    if (isReset) {
       onReset()
       setIsCorrect(false)
     }
-  }, [lives, onReset]);
+  }, [isReset, onReset]);
 
   const icon = data.type === 'unfilled' && isCorrect ? <RiCloseFill /> : undefined
 

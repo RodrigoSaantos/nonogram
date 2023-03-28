@@ -1,5 +1,5 @@
 import { useControl } from "@/hooks/useControl";
-import { Flex, useToken } from "@chakra-ui/react";
+import { Button, Flex, Modal, ModalBody, ModalContent, ModalHeader, useToken } from "@chakra-ui/react";
 import { AiFillHeart } from 'react-icons/ai';
 import { Canvas } from "../Canvas";
 import { Control } from "../Control";
@@ -19,11 +19,26 @@ const Hearts = () => {
 };
 
 export function Screen() {
+  const { lives, onReset } = useControl()
+  const [red500] = useToken('colors', ['red.500'])
   return (
     <Flex flexDirection={'column'} gap="8" width={'100%'} height="100vh" justify={'center'} align='center'>
       <Hearts />
       <Canvas />
       <Control />
+      <Modal size={'xs'} isCentered isOpen={!lives} onClose={() => null}>
+        <ModalContent>
+          <ModalHeader textAlign={'center'}>
+            Sem Vidas!
+          </ModalHeader>
+          <ModalBody>
+            <Flex flexDir={'column'} gap={8} justify={'center'} alignItems='center' height={40}>
+              <AiFillHeart size={52} color={red500} />
+              <Button colorScheme={'blue'} onClick={onReset}>Recomeçar</Button>
+            </Flex>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Flex>
   )
 }
