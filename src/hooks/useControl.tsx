@@ -16,6 +16,7 @@ type ControlContextData = {
   board: boolean[]
   lives: number
   isReset: boolean
+  completedPuzzle: boolean
   cellSelected?: Puzzle
   completeHints: CompleteHints
   onSetTypeSelected: (type: TypeSelect) => void;
@@ -55,6 +56,7 @@ export function ControlProvider({ children }: ControlProviderProps) {
   const [fase, setFase] = useState<PuzzleProps>(gamePuzzle);
   const [lives, setLives] = useState(3)
   const [isReset, setIsReset] = useState(false);
+  const completedPuzzle = completeHints.column.every(col => col === true) && completeHints.row.every(row => row === true)
 
   const onReset = useCallback(() => {
     setCompletedHints({ row: Array(10).fill(false), column: Array(10).fill(false) })
@@ -160,7 +162,8 @@ export function ControlProvider({ children }: ControlProviderProps) {
         lives,
         onMadeMistake,
         onReset,
-        isReset
+        isReset,
+        completedPuzzle
       }}
     >
       {children}
