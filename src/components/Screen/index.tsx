@@ -1,5 +1,7 @@
 import { useControl } from "@/hooks/useControl";
 import { Box, Button, Flex, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useToken } from "@chakra-ui/react";
+import party from 'party-js';
+import { useRef } from "react";
 import { AiFillHeart } from 'react-icons/ai';
 import { Canvas } from "../Canvas";
 import { Control } from "../Control";
@@ -21,12 +23,21 @@ const Hearts = () => {
 export function Screen() {
   const { lives, onReset, completedPuzzle, board } = useControl()
   const [red500] = useToken('colors', ['red.500'])
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  if (completedPuzzle && modalRef.current) {
+    party.confetti(modalRef.current, {
+      count: 100,
+    })
+  }
+
   return (
-    <Flex flexDirection={'column'} gap="8" width={'100%'} height="100vh" justify={'center'} align='center'>
+    <Flex ref={modalRef} flexDirection={'column'} gap="8" width={'100%'} height="100vh" justify={'center'} align='center'>
       <Hearts />
       <Canvas />
       <Control />
       <Modal size={'xs'} isCentered isOpen={!lives} onClose={() => null}>
+        <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign={'center'}>
             Sem Vidas!
