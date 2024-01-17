@@ -1,15 +1,15 @@
 export interface Puzzle {
-  id: number;
-  block: 'a' | 'b' | 'c' | 'd';
+  id: number
+  block: 'a' | 'b' | 'c' | 'd'
   type: 'filled' | 'unfilled'
-  column: "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
+  column: 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j'
 }
 
 export interface PuzzleProps {
-  a: Puzzle[];
-  b: Puzzle[];
-  c: Puzzle[];
-  d: Puzzle[];
+  a: Puzzle[]
+  b: Puzzle[]
+  c: Puzzle[]
+  d: Puzzle[]
 }
 export const gamePuzzle: PuzzleProps = {
   a: [

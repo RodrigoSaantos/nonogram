@@ -1,21 +1,30 @@
-import { Flex, IconButton } from "@chakra-ui/react";
-import { RiCloseFill } from 'react-icons/ri';
-import { FaStop } from 'react-icons/fa';
-import { useControl } from "@/hooks/useControl";
+import { useControl } from '@/hooks/useControl'
+import { FaStop } from 'react-icons/fa'
+import { RiCloseFill } from 'react-icons/ri'
 
 export function Control() {
   const { typeSelected, onSetTypeSelected } = useControl()
 
   const isActiveFilled = typeSelected === 'filled'
-  
+
   return (
-    <Flex bg={'gray.100'} borderRadius={'full'} gap={5}>
-      <Flex bg={!isActiveFilled ?  'white' : 'transparent'} onClick={() => onSetTypeSelected('unfilled')} cursor='pointer' borderRadius={'50%'} padding="1rem">
-        <IconButton _active={{}}  aria-label="closeIcon" bg={'transparent'} icon={<RiCloseFill size={32} />} _hover={{}} />
-      </Flex>
-      <Flex bg={isActiveFilled ?  'white' : 'transparent'} onClick={() => onSetTypeSelected('filled')} cursor='pointer' borderRadius={'50%'} padding="1rem">
-        <IconButton _active={{}}  aria-label="FilledIcon" bg={'transparent'} icon={<FaStop size={32} />} _hover={{}} />
-      </Flex>
-    </Flex>
+    <div className="flex bg-muted-foreground/30 rounded-full gap-5">
+      <div
+        className={`flex cursor-pointer rounded-full p-4 ${!isActiveFilled ? 'bg-accent shadow-4xl shadow-muted-foreground' : 'bg-transparent opacity-50'}`}
+        onClick={() => onSetTypeSelected('unfilled')}
+      >
+        <button className="bg-transparent">
+          <RiCloseFill aria-label="closeIcon" size={32} />
+        </button>
+      </div>
+      <div
+        className={`flex cursor-pointer rounded-full p-4 ${isActiveFilled ? 'bg-accent shadow-4xl shadow-muted-foreground' : 'bg-transparent opacity-50'}`}
+        onClick={() => onSetTypeSelected('filled')}
+      >
+        <button className="bg-transparent" aria-label="FilledIcon">
+          <FaStop size={32} />
+        </button>
+      </div>
+    </div>
   )
 }

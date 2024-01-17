@@ -1,18 +1,19 @@
-import { Flex, Text } from "@chakra-ui/react";
-
 interface ColHintsProps {
   hints: number[]
-  isDisabled: boolean;
+  isDisabled: boolean
 }
 
 export function ColHints({ hints, isDisabled }: ColHintsProps) {
   return (
-      <Flex flexDir={'column'} border='2px solid' bg='gray.100' alignItems={'center'} borderRadius='lg' borderColor={'gray.200'} w={'45px'} h={'96px'} justifyContent="flex-end">
-        {hints?.map(hint => (
-          <Text opacity={isDisabled ? 0.5 : 1} key={hint} display={'flex'} w='100%' justifyContent={'center'}>
-            {hint}
-          </Text>
-        ))}
-    </Flex>
+    <div className="flex flex-col border-[2px] bg-muted-foreground/30 items-center rounded-lg border-muted-foreground/50 w-[45px] h-[96px] justify-end">
+      {hints?.map((hint) => (
+        <span
+          key={hint}
+          className={`flex w-full justify-center ${isDisabled ? 'opacity-50' : 'opacity-100'}`}
+        >
+          {hint}
+        </span>
+      ))}
+    </div>
   )
 }

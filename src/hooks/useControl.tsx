@@ -1,38 +1,56 @@
-import { type Puzzle, type PuzzleProps, gamePuzzle } from '@/components/Screen/puzzle';
-import { getRowNumber, getHintByColumn, getHintByRow } from '@/utils/getFilledByColumn';
-import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+'use client'
+
+import {
+  type Puzzle,
+  type PuzzleProps,
+  gamePuzzle,
+} from '@/components/Screen/puzzle'
+import {
+  getRowNumber,
+  getHintByColumn,
+  getHintByRow,
+} from '@/utils/getFilledByColumn'
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 type TypeSelect = 'filled' | 'unfilled'
 
 interface CompleteHints {
-  row: boolean[];
-  column: boolean[];
+  row: boolean[]
+  column: boolean[]
 }
 
 type ControlContextData = {
-  typeSelected: TypeSelect;
-  colHint: number[][];
-  rowHint: number[][];
+  typeSelected: TypeSelect
+  colHint: number[][]
+  rowHint: number[][]
   board: boolean[]
   lives: number
   isReset: boolean
   completedPuzzle: boolean
   cellSelected?: Puzzle
   completeHints: CompleteHints
-  onSetTypeSelected: (type: TypeSelect) => void;
+  onSetTypeSelected: (type: TypeSelect) => void
   onSetBoard: (index: number, value: boolean) => void
   onSetCellSelected: (cell: Puzzle) => void
   onMadeMistake: () => void
   onReset: () => void
-};
+}
 
 type ControlProviderProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 const ControlContext = createContext<ControlContextData>(
-  {} as ControlContextData
-);
+  {} as ControlContextData,
+)
 
 const COLUMN_INDEX = {
   a: 0,
@@ -50,26 +68,36 @@ const COLUMN_INDEX = {
 export function ControlProvider({ children }: ControlProviderProps) {
   const size = 10
   const [typeSelected, setTypeSelected] = useState<TypeSelect>('filled')
-  const [cellSelected, setCellSelected] = useState<Puzzle | undefined>(undefined)
-  const [board, setBoard] = useState(Array(size * size).fill(false));
-  const [completeHints, setCompletedHints] = useState<CompleteHints>({ row: Array(10).fill(false), column: Array(10).fill(false) });
-  const [fase, setFase] = useState<PuzzleProps>(gamePuzzle);
+  const [cellSelected, setCellSelected] = useState<Puzzle | undefined>(
+    undefined,
+  )
+  const [board, setBoard] = useState(Array(size * size).fill(false))
+  const [completeHints, setCompletedHints] = useState<CompleteHints>({
+    row: Array(10).fill(false),
+    column: Array(10).fill(false),
+  })
+  const [fase, setFase] = useState<PuzzleProps>(gamePuzzle)
   const [lives, setLives] = useState(3)
-  const [isReset, setIsReset] = useState(false);
-  const completedPuzzle = completeHints.column.every(col => col === true) && completeHints.row.every(row => row === true)
+  const [isReset, setIsReset] = useState(false)
+  const completedPuzzle =
+    completeHints.column.every((col) => col === true) &&
+    completeHints.row.every((row) => row === true)
 
   const onReset = useCallback(() => {
-    setCompletedHints({ row: Array(10).fill(false), column: Array(10).fill(false) })
+    setCompletedHints({
+      row: Array(10).fill(false),
+      column: Array(10).fill(false),
+    })
     setBoard(Array(size * size).fill(false))
-    setLives(3);
-    setIsReset(() => true);
+    setLives(3)
+    setIsReset(() => true)
     setTimeout(() => {
       setIsReset(() => false)
-    }, 50);
+    }, 50)
   }, [])
 
   const onMadeMistake = useCallback(() => {
-    setLives(state => state - 1)
+    setLives((state) => state - 1)
   }, [])
 
   const colHint = useMemo(() => {
@@ -82,13 +110,13 @@ export function ControlProvider({ children }: ControlProviderProps) {
 
   const onSetTypeSelected = useCallback((type: TypeSelect) => {
     setTypeSelected(type)
-  }, []);
+  }, [])
 
   const onSetBoard = useCallback((index: number, value: boolean) => {
-    setBoard(state => {
-      const draft = [...state];
+    setBoard((state) => {
+      const draft = [...state]
       draft.splice(index, 1, value)
-      return draft;
+      return draft
     })
   }, [])
 
@@ -96,56 +124,64 @@ export function ControlProvider({ children }: ControlProviderProps) {
     setCellSelected(cell)
   }, [])
 
-  const getTheNumberOfFilledColumns = useCallback((index: number) => {
-    let columnCompleted = 0
-    for (let j = index; j <= size * size; j += size) {
-      if (board[j]) {
-        columnCompleted++;
-      }
-    }
-    return columnCompleted
-  }, [board])
-
-  const getTheNumberOfFilledRows = useCallback((cellIndex: number) => {
-    const start = cellIndex - (cellIndex % 10);
-    const end = start + 10;
-    const row = board.slice(start, end);
-    return row.reduce((acc, val) => acc + (val ? 1 : 0), 0);
-  }, [board])
-
-  const checkHints = useCallback((cellSelected?: Puzzle): void => {
-
-    if (cellSelected) {
-      const cellIndex = cellSelected.id - 1;
-      const rowIndex = getRowNumber(cellSelected.id, size) - 1;
-
-      // Verifica a linha
-      const rowHint = getHintByRow(fase)[rowIndex];
-      const sumRowHint = rowHint.reduce((total, number) => total + number)
-      const filledCellsInRow = getTheNumberOfFilledRows(cellIndex);
-
-      // Verifica a coluna
-      const columnIndex = COLUMN_INDEX[cellSelected.column];
-      const colHint = getHintByColumn(fase)[columnIndex];
-      const sumColHint = colHint.reduce((total, number) => total + number)
-      const filledCellsInColumn = getTheNumberOfFilledColumns(columnIndex);
-
-      setCompletedHints(state => {
-        const { column, row } = state
-        row.splice(rowIndex, 1, sumRowHint === filledCellsInRow)
-        column.splice(columnIndex, 1, sumColHint === filledCellsInColumn)
-        return {
-          ...state,
-          column,
-          row,
+  const getTheNumberOfFilledColumns = useCallback(
+    (index: number) => {
+      let columnCompleted = 0
+      for (let j = index; j <= size * size; j += size) {
+        if (board[j]) {
+          columnCompleted++
         }
-      })
-    }
-  }, [fase, getTheNumberOfFilledColumns, getTheNumberOfFilledRows])
+      }
+      return columnCompleted
+    },
+    [board],
+  )
+
+  const getTheNumberOfFilledRows = useCallback(
+    (cellIndex: number) => {
+      const start = cellIndex - (cellIndex % 10)
+      const end = start + 10
+      const row = board.slice(start, end)
+      return row.reduce((acc, val) => acc + (val ? 1 : 0), 0)
+    },
+    [board],
+  )
+
+  const checkHints = useCallback(
+    (cellSelected?: Puzzle): void => {
+      if (cellSelected) {
+        const cellIndex = cellSelected.id - 1
+        const rowIndex = getRowNumber(cellSelected.id, size) - 1
+
+        // Verifica a linha
+        const rowHint = getHintByRow(fase)[rowIndex]
+        const sumRowHint = rowHint.reduce((total, number) => total + number)
+        const filledCellsInRow = getTheNumberOfFilledRows(cellIndex)
+
+        // Verifica a coluna
+        const columnIndex = COLUMN_INDEX[cellSelected.column]
+        const colHint = getHintByColumn(fase)[columnIndex]
+        const sumColHint = colHint.reduce((total, number) => total + number)
+        const filledCellsInColumn = getTheNumberOfFilledColumns(columnIndex)
+
+        setCompletedHints((state) => {
+          const { column, row } = state
+          row.splice(rowIndex, 1, sumRowHint === filledCellsInRow)
+          column.splice(columnIndex, 1, sumColHint === filledCellsInColumn)
+          return {
+            ...state,
+            column,
+            row,
+          }
+        })
+      }
+    },
+    [fase, getTheNumberOfFilledColumns, getTheNumberOfFilledRows],
+  )
 
   useEffect(() => {
     checkHints(cellSelected)
-  }, [cellSelected, checkHints]);
+  }, [cellSelected, checkHints])
 
   return (
     <ControlContext.Provider
@@ -163,14 +199,14 @@ export function ControlProvider({ children }: ControlProviderProps) {
         onMadeMistake,
         onReset,
         isReset,
-        completedPuzzle
+        completedPuzzle,
       }}
     >
       {children}
     </ControlContext.Provider>
-  );
+  )
 }
 
 export function useControl(): ControlContextData {
-  return useContext(ControlContext);
+  return useContext(ControlContext)
 }

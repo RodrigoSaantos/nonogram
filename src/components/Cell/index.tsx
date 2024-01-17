@@ -1,9 +1,8 @@
-import { Flex, IconButton } from "@chakra-ui/react";
-import { RiCloseFill } from 'react-icons/ri';
-import { useControl } from "@/hooks/useControl";
-import { useEffect, useState } from "react";
-import { getRowNumber } from "@/utils/getFilledByColumn";
-import { Puzzle } from "../Screen/puzzle";
+import { useControl } from '@/hooks/useControl'
+import { getRowNumber } from '@/utils/getFilledByColumn'
+import { useEffect, useState } from 'react'
+import { RiCloseFill } from 'react-icons/ri'
+import { Puzzle } from '../Screen/puzzle'
 
 interface CellProps {
   data: Puzzle
@@ -20,32 +19,39 @@ const COLUMN_INDEX = {
   h: 7,
   i: 8,
   j: 9,
-};
+}
 
 export function Cell({ data }: CellProps) {
-  const { typeSelected, onSetBoard, onSetCellSelected, completeHints, onMadeMistake, lives, onReset, isReset } = useControl()
-  const [isCorrect, setIsCorrect] = useState(false);
+  const {
+    typeSelected,
+    onSetBoard,
+    onSetCellSelected,
+    completeHints,
+    onMadeMistake,
+    onReset,
+    isReset,
+  } = useControl()
+  const [isCorrect, setIsCorrect] = useState(false)
 
   const handleClick = () => {
     const isSelectedType = typeSelected === data.type
     onSetCellSelected(data)
     if (isSelectedType) {
-        setIsCorrect(true);
+      setIsCorrect(true)
       if (data.type === 'filled') onSetBoard(data.id - 1, true)
-      return;
+      return
     }
     onMadeMistake()
-    setIsCorrect(true);
+    setIsCorrect(true)
   }
 
   useEffect(() => {
-    const colIndex = COLUMN_INDEX[data.column];
-    const rowIndex = getRowNumber(data.id, 10) - 1;
+    const colIndex = COLUMN_INDEX[data.column]
+    const rowIndex = getRowNumber(data.id, 10) - 1
 
     if (completeHints.column[colIndex] || completeHints.row[rowIndex]) {
       setIsCorrect(true)
     }
-
   }, [completeHints, data.column, data.id])
 
   useEffect(() => {
@@ -53,13 +59,24 @@ export function Cell({ data }: CellProps) {
       onReset()
       setIsCorrect(false)
     }
-  }, [isReset, onReset]);
+  }, [isReset, onReset])
 
-  const icon = data.type === 'unfilled' && isCorrect ? <RiCloseFill /> : undefined
+  const icon =
+    data.type === 'unfilled' && isCorrect ? <RiCloseFill /> : undefined
 
   return (
-    <Flex justify={'center'} align="center" border='1px solid' borderColor={'gray.100'} height={12} width={12}>
-      <IconButton bg={data.type === 'filled' && isCorrect ? 'gray.500' : 'transparent'} fontSize={32} icon={icon} onClick={handleClick} aria-label="nada" />
-    </Flex>
+    <div className="flex justify-center items-center border border-accent-foreground/10 h-12 w-12">
+      <button
+        type="button"
+        className={`flex justify-center group items-center w-11 h-11 rounded-sm text-5xl ${typeSelected === 'filled' && !isCorrect ? 'hover:bg-foreground/30' : ''} ${data.type === 'filled' && isCorrect ? 'bg-foreground hover:bg-foreground' : 'bg-transparent'}`}
+        onClick={handleClick}
+        aria-label="nada"
+      >
+        <RiCloseFill
+          className={`opacity-30 hidden ${typeSelected === 'unfilled' && !isCorrect ? 'group-hover:block' : ''}`}
+        />
+        {icon}
+      </button>
+    </div>
   )
 }
