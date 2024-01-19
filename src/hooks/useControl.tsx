@@ -64,7 +64,7 @@ const COLUMN_INDEX = {
   i: 8,
   j: 9,
 }
-
+const livesInitial = 3
 export function ControlProvider({ children }: ControlProviderProps) {
   const size = 10
   const [typeSelected, setTypeSelected] = useState<TypeSelect>('filled')
@@ -77,7 +77,7 @@ export function ControlProvider({ children }: ControlProviderProps) {
     column: Array(10).fill(false),
   })
   const [fase, setFase] = useState<PuzzleProps>(gamePuzzle)
-  const [lives, setLives] = useState(3)
+  const [lives, setLives] = useState(livesInitial)
   const [isReset, setIsReset] = useState(false)
   const completedPuzzle =
     completeHints.column.every((col) => col === true) &&
@@ -89,7 +89,7 @@ export function ControlProvider({ children }: ControlProviderProps) {
       column: Array(10).fill(false),
     })
     setBoard(Array(size * size).fill(false))
-    setLives(3)
+    setLives(livesInitial)
     setIsReset(() => true)
     setTimeout(() => {
       setIsReset(() => false)

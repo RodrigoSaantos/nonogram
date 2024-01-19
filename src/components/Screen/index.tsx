@@ -15,7 +15,7 @@ const Hearts = () => {
     .map((_, i) => {
       return (
         <AiFillHeart
-          className={`${i < lives ? 'text-red-500' : 'text-gray-500'}`}
+          className={`${i < lives ? 'text-red-500' : 'text-gray-500 animate-failed'}`}
           size={52}
           key={i}
         />

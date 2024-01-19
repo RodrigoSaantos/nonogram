@@ -32,6 +32,7 @@ export function Cell({ data }: CellProps) {
     isReset,
   } = useControl()
   const [isCorrect, setIsCorrect] = useState(false)
+  const [hasFailed, setHasFailed] = useState(false)
 
   const handleClick = () => {
     const isSelectedType = typeSelected === data.type
@@ -42,7 +43,11 @@ export function Cell({ data }: CellProps) {
       return
     }
     onMadeMistake()
+    setHasFailed(true)
     setIsCorrect(true)
+    setTimeout(() => {
+      setHasFailed(false)
+    }, 500)
   }
 
   useEffect(() => {
@@ -62,13 +67,23 @@ export function Cell({ data }: CellProps) {
   }, [isReset, onReset])
 
   const icon =
-    data.type === 'unfilled' && isCorrect ? <RiCloseFill /> : undefined
+    data.type === 'unfilled' && isCorrect ? (
+      <RiCloseFill className="animate-checked" />
+    ) : undefined
 
   return (
-    <div className="flex justify-center items-center border border-accent-foreground/10 h-12 w-12">
+    <div
+      className={`flex justify-center items-center border border-accent-foreground/10 h-12 w-12 transition-colors duration-150 ${hasFailed ? 'bg-red-500' : ''}`}
+    >
       <button
         type="button"
-        className={`flex justify-center group items-center w-11 h-11 rounded-sm text-5xl ${typeSelected === 'filled' && !isCorrect ? 'hover:bg-foreground/30' : ''} ${data.type === 'filled' && isCorrect ? 'bg-foreground hover:bg-foreground' : 'bg-transparent'}`}
+        className={`
+        flex justify-center group items-center w-11 h-11 rounded-sm text-5xl 
+        ${hasFailed ? 'animate-mistake' : ''} 
+        ${typeSelected === 'filled' && !isCorrect ? 'hover:bg-foreground/30' : ''} 
+        ${data.type === 'filled' && isCorrect ? 'bg-foreground hover:bg-foreground' : 'bg-transparent'}
+        ${isCorrect && !hasFailed ? 'animate-checked' : ''}
+        `}
         onClick={handleClick}
         aria-label="nada"
       >
