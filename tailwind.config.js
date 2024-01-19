@@ -66,10 +66,28 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        checked: {
+          from: { transform: 'scale(1.1)', opacity: 0 },
+          to: { transform: 'scale(1)', opacity: 1 },
+        },
+        mistake: {
+          '0%': { opacity: 0 },
+          '60%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        failed: {
+          '20%': { transform: 'translate(2px, -2px) scale(1.1)' },
+          '40%': { transform: 'translate(-2px, 2px)' },
+          '60%': { transform: 'translate(1px, -1px) scale(1.05)' },
+          '100%': { transform: 'translate(0px, 0px) scale(1)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        checked: 'checked 0.2s ease-out',
+        failed: 'failed 0.2s ease-out',
+        mistake: 'mistake 0.7s ease-out',
       },
     },
   },
